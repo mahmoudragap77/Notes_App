@@ -1,6 +1,6 @@
 # 📝 Notes App
 
-A simple Android notes application built with **Kotlin** and **Jetpack Compose**. Create, view, edit, and delete notes, all stored locally on the device using **Room**.
+An Android notes application built with **Kotlin** and **Jetpack Compose**. Create, view, edit, and delete notes, all stored locally on the device using **Room**.
 
 ## ✨ Features
 
