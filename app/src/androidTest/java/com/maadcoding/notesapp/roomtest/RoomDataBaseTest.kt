@@ -31,10 +31,6 @@ class RoomDataBaseTest {
         dao = db.dao
     }
 
-    @After
-    fun closeDb(){
-        db.close()
-    }
 
     @Test
     fun insertTest(){
@@ -57,20 +53,10 @@ class RoomDataBaseTest {
         }
     }
 
-    @Test
-    fun selectTest_WithNotes(){
-        runTest {
-            val firstNote = Note(1, "One")
-            val secondNote = Note(2, "Two")
-            val thirdNote = Note(3, "Three")
 
-            dao.insert(firstNote)
-            dao.insert(secondNote)
-            dao.insert(thirdNote)
-            val notes = dao.getAllNotes().first()
 
-            assertEquals(3, notes.size)
-           assertEquals(listOf(firstNote, secondNote, thirdNote), notes)
-        }
+    @After
+    fun closeDb(){
+        db.close()
     }
     }

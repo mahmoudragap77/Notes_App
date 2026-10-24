@@ -1,9 +1,7 @@
 package com.maadcoding.notesapp.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
@@ -26,13 +24,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.maadcoding.notesapp.database.Note
+import com.maadcoding.notesapp.navigation.NotesNavApp
 import com.maadcoding.notesapp.ui.NoteViewModel
 import com.maadcoding.notesapp.ui.icon.add
 import com.maadcoding.notesapp.ui.theme.NotesAppTheme
@@ -44,25 +42,26 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NotesAppTheme {
-                HomeScreen()
+                NotesNavApp()
             }
         }
     }
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, viewModel: NoteViewModel = viewModel()) {
-
-    val activity = LocalActivity.current
-    val context = LocalContext.current
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    viewModel: NoteViewModel = viewModel(),
+    onAddNoteClick: () -> Unit = {},
+    onNoteClick: (note: Note) -> Unit = {}
+) {
     val notes by viewModel.notes.collectAsState(emptyList())
     Scaffold(
+        modifier = modifier,
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    activity?.startActivity(Intent(context, AddNoteActivity::class.java))
-                },
+                onClick = onAddNoteClick,
                 containerColor = Color.Blue,
             ) {
                 Icon(
@@ -76,12 +75,9 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: NoteViewModel = viewMod
         LazyColumn(
             modifier = Modifier.padding(innerPadding)
         ) {
-            items(notes){note ->
+            items(notes) { note ->
                 NoteListItem(note) {
-                    val i = Intent(context, EditNoteActivity::class.java)
-                    i.putExtra("note" , note)
-                    activity?.startActivity(i)
-
+                    onNoteClick(note)
                 }
             }
         }
@@ -89,7 +85,7 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: NoteViewModel = viewMod
 }
 
 @Composable
-fun NoteListItem(note : Note, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun NoteListItem(note: Note, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.LightGray),
         modifier = modifier
@@ -119,5 +115,5 @@ private fun HomeScreenPreview() {
 @Preview
 @Composable
 private fun NoteListItemPreview() {
-    NoteListItem(Note(content = "")){}
+    NoteListItem(Note(content = "")) {}
 }
