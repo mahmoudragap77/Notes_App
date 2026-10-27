@@ -6,9 +6,9 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.maadcoding.notesapp.ui.activity.AddNoteScreen
-import com.maadcoding.notesapp.ui.activity.EditNoteScreen
-import com.maadcoding.notesapp.ui.activity.HomeScreen
+import com.maadcoding.notesapp.ui.screens.AddNoteScreen
+import com.maadcoding.notesapp.ui.screens.EditNoteScreen
+import com.maadcoding.notesapp.ui.HomeScreen
 
 @Composable
 fun NotesNavApp(

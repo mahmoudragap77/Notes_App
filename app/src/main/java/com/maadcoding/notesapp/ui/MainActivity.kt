@@ -1,4 +1,4 @@
-package com.maadcoding.notesapp.ui.activity
+package com.maadcoding.notesapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.maadcoding.notesapp.database.Note
 import com.maadcoding.notesapp.navigation.NotesNavApp
-import com.maadcoding.notesapp.ui.NoteViewModel
 import com.maadcoding.notesapp.ui.icon.add
 import com.maadcoding.notesapp.ui.theme.NotesAppTheme
 import kotlin.collections.emptyList

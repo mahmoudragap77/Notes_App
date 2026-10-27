@@ -1,17 +1,16 @@
-package com.maadcoding.notesapp.ui.activity
+package com.maadcoding.notesapp.ui.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,13 +20,14 @@ import com.maadcoding.notesapp.database.Note
 import com.maadcoding.notesapp.ui.NoteViewModel
 
 @Composable
-fun AddNoteScreen(
+fun EditNoteScreen(
+    note: Note,
     modifier: Modifier = Modifier,
     viewModel: NoteViewModel = viewModel(),
     onNavigateBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val noteFieldState = rememberTextFieldState()
+    val noteFieldState = rememberTextFieldState(note.content)
 
     Column(
         modifier = modifier
@@ -42,26 +42,40 @@ fun AddNoteScreen(
                 .fillMaxWidth()
         )
 
-        OutlinedButton(
-            onClick = {
-                val content = noteFieldState.text.toString()
-                val note = Note(content = content)
-                viewModel.upsert(note)
-                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-                noteFieldState.clearText()
-                onNavigateBack()
-            },
+        Row(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth()
                 .padding(top = 32.dp)
         ) {
-            Text(text = "Save")
+            OutlinedButton(
+                onClick = {
+                    val content = noteFieldState.text.toString()
+                    val updatedNote = Note(note.id, content)
+                    viewModel.upsert(updatedNote)
+                    onNavigateBack()
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Update")
+            }
+            OutlinedButton(
+                onClick = {
+                    viewModel.delete(note)
+                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
+                    onNavigateBack()
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp)
+            ) {
+                Text(text = "Delete")
+            }
         }
     }
 }
 
 @Preview(showSystemUi = true, device = "spec:width=411dp,height=891dp")
 @Composable
-private fun AddNoteScreenPreview() {
-    AddNoteScreen()
+private fun EditNoteScreenPreview() {
+    EditNoteScreen(Note(7, ""))
 }
