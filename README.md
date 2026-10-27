@@ -49,11 +49,12 @@ app/src/main/java/com/maadcoding/notesapp/
 
 ## 🧱 Architecture
 
-The app follows a simple MVVM structure:
+The app follows the MVVM structure:
 
 1. **Room** (`Note`, `NoteDao`, `RoomDBHelper`) stores the notes in a local `note` table.
 2. **`NoteViewModel`** reads notes as a `Flow` and runs write operations inside `viewModelScope`.
 3. **Compose screens** collect the Flow as state, so the UI stays in sync with the database.
+4. **Navigation 3 ** Navigate between the screens.
 
 ## 🧪 Running Tests
 
