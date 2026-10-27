@@ -16,18 +16,18 @@ An Android notes application built with **Kotlin** and **Jetpack Compose**. Crea
 | Category | Technology |
 | --- | --- |
 | Language | Kotlin |
-| UI | Jetpack Compose, Material 3 |
+| UI | Jetpack Compose, Material 3, Navigation 3 Compose |
 | Local database | Room `2.8.5` (with KSP) |
-| Architecture | MVVM (`AndroidViewModel`) |
+| Architecture | MVVM (`AndroidViewModel`)  |
 | Async | Kotlin Coroutines & Flow |
-| Testing | JUnit, AndroidX Test, Compose UI Test |
+| Testing | JUnit, AndroidX Test |
 
 ## 📱 Requirements
 
 - Android Studio (latest stable version recommended)
 - JDK 11 or higher
 - Min SDK: 24 (Android 7.0)
-- Target / Compile SDK: 36
+- Target / Compile SDK: 37
 
 ## 🗂️ Project Structure
 
@@ -49,20 +49,21 @@ app/src/main/java/com/maadcoding/notesapp/
 
 ## 🧱 Architecture
 
-The app follows a simple MVVM structure:
+The app follows the MVVM structure:
 
 1. **Room** (`Note`, `NoteDao`, `RoomDBHelper`) stores the notes in a local `note` table.
 2. **`NoteViewModel`** reads notes as a `Flow` and runs write operations inside `viewModelScope`.
 3. **Compose screens** collect the Flow as state, so the UI stays in sync with the database.
+4. **Navigation 3 ** Navigate between the screens.
 
 ## 🧪 Running Tests
 
 Instrumented tests include a Room database test (`RoomDataBaseTest`).
+<img width="782" height="325" alt="db test" src="https://github.com/user-attachments/assets/3aff30e1-17c4-4cf5-bcb9-423a75e7eb41" />
 
 ## 🔮 Ideas for Future Improvements
 
 - Note titles and timestamps
 - Search and sorting
 - Note categories or colors
-- Navigation Compose instead of multiple activities
 - Dependency injection (Hilt)
